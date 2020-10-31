@@ -37,7 +37,9 @@ router.patch('/api/profile', auth, async (req, res) => {
     const allowedUpdates = ['name', 'bio', 'website' , 'phone'];
     const updates = Object.keys(req.body);
     const isAllowed = updates.every((cur)=> allowedUpdates.includes(cur));
-    if(!isAllowed) return res.status(400).send({err: 'Wrong update attempt'});
+    if(!isAllowed){
+        return res.status(400).send({err: 'Wrong update attempt'});
+    } 
 
     //Updating the profile if allowed
     try{
