@@ -33,7 +33,20 @@ router.get('/api/profile', auth, async (req, res) =>{
 });
 
 router.patch('/api/profile', auth, async (req, res) => {
-    
+    //Checking if the updates are allowed
+    const allowedUpdates = ['name', 'bio', 'website' , 'phone'];
+    const updates = Object.keys(req.body);
+    const isAllowed = updates.every((cur)=> allowedUpdates.includes(cur));
+    if(!isAllowed) return res.status(400).send({err: 'Wrong update attempt'});
+
+    //Updating the profile if allowed
+    try{
+        await Profile.updateOne({user: req.user._id}, { ...req.body });
+        const profile = await Profile.findOne({user: req.user._id});
+        res.status(200).send(profile);
+    } catch(err){
+        res.status(500).send({err});
+    }
 });
 
 module.exports = router;
