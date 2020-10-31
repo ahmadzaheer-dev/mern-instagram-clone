@@ -134,7 +134,7 @@ router.put('/api/post/like/:id', auth, async (req, res) => {
       return like.user === req.user._id
     });
 
-    if(like){
+    if(like.length > 0){
       return res.status(400).send({err: "The post is already liked"});
     }
 
@@ -151,8 +151,25 @@ router.put('/api/post/like/:id', auth, async (req, res) => {
 })
 
 //API ROUTE FOR ADDING A COMMENT ON A POST
+router.put('/api/post/comment/:id', auth, async (req, res) => {
+  try{
+    const post = await Post.findOne({_id: req.params.id});
+    if(!post){
+      return res.status(404).send({err: "The post is unavailable"});
+    }
+    const comment = {
+      ...req.body,
+      user: req.user._id
+    }
+    post.comments.unshift(comment);
+    await post.save();
+    res.status(200).send(post);
+  }catch(err){
+    res.status(500).send({err});
+  }
+});
 
-//API ROUTE FOR EDITING A COMMETN ON A POST
+//API ROUTE FOR EDITING A COMMENT ON A POST
 
 //API ROUTE FOR UNLIKING A POST
 
