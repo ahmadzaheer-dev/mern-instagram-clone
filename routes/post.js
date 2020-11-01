@@ -170,9 +170,71 @@ router.put('/api/post/comment/:id', auth, async (req, res) => {
 });
 
 //API ROUTE FOR EDITING A COMMENT ON A POST
+router.patch('/api/post/comment/:id/:comment_id', auth, async (req, res) => {
+  try{
+    //Finding the post
+    const post = await Post.findOne({ _id: req.params.id});
+    //Checking if the post exist
+    if(!post){
+      return res.status(404).send({err: "The post does not exist"});
+    }
+    //Finding the comment
+    const comment = post.comments.find(comment => comment._id.toString() === req.params.comment_id)
+    //Checking if the comment exists
+    if(!comment){
+      return res.status(404).send({err: "The comment does not exist"});
+    }
+    //Checking if the user is authenticated to update that comment
+
+    if(comment.user.toString() !== req.user.id){
+      return res.status(400).send({err: "The user is not authorized"});
+    }
+    //Editing the comment
+    post.comments.forEach((comment) => {
+      if(comment._id.toString() === req.params.comment_id){
+        comment.caption = req.body.caption
+      }
+    })
+    //saving the post
+    await post.save();
+    res.status(200).send(post.comments);
+  } catch(err) {
+    res.status(500).send({err});
+  }
+});
 
 //API ROUTE FOR UNLIKING A POST
 
+
 //API ROUTE FOR DELETING A COMMENT ON A POST
+router.delete('/api/post/comment/:id/:comment_id', auth, async (req, res) => {
+  try{
+    //Finding the post
+    const post = await Post.findOne({ _id: req.params.id});
+    //Checking if the post exist
+    if(!post){
+      return res.status(404).send({err: "The post does not exist"});
+    }
+    //Finding the comment
+    const comment = post.comments.find(comment => comment._id.toString() === req.params.comment_id)
+    //Checking if the comment exists
+    if(!comment){
+      return res.status(404).send({err: "The comment does not exist"});
+    }
+    //Checking if the user is authenticated to update that comment
+    if(comment.user.toString() !== req.user._id.toString() && req.user._id.toString() !== post.user.toString()){
+      return res.status(400).send({err: "The user is not authorized"});
+    }
+    //Finding the index of comment to be removed
+    const removeIndex = post.comments.map(comment => comment.user.toString()).indexOf(req.user.id);
+    //Removing that comment
+    post.comments.splice(removeIndex, 1);
+    //Saving the post
+    await post.save();
+    res.status(200).send(post.comments);
+  } catch(err) {
+    res.status(500).send({err});
+  }
+});
 
 module.exports = router;
