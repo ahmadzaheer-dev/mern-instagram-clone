@@ -51,4 +51,39 @@ router.patch('/api/profile', auth, async (req, res) => {
     }
 });
 
+router.put('/api/profile/follow/:id', auth, async (req, res) => {
+    
+    try{
+        //1. we need to find the user that we need to follow
+        const userProfile = await Profile.findOne({user: req.params.id});
+        if(!userProfile){
+            return res.status(404).send({err: 'profile not found'});
+        }
+        
+        const isAlreadyFollowed = userProfile.followers.find(follower => follower.user.toString() === req.user.id);
+        if(isAlreadyFollowed){
+            return res.status(400).send({err: 'The profile is already followed'});
+        }
+
+        const myProfile = await Profile.findOne({user: req.user._id});
+        if(!myProfile){
+            return res.status(404).send({err: 'You haven\'t created a profile yet'});
+        }
+        console.log(myProfile);
+        //2. push our details in that users followers
+        userProfile.followers.unshift({ user: req.user._id});
+        console.log(userProfile);
+        await userProfile.save();
+        //3. push that user on our following
+        myProfile.following.unshift({user: req.params.id});
+        console.log(myProfile);
+        await myProfile.save();
+
+        res.status(200).send({userProfile: userProfile.followers, myProfile: myProfile.following});
+    } catch(err){
+        res.status(500).send({ err })
+    }
+
+    })
+
 module.exports = router;
