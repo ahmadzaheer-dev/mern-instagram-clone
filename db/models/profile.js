@@ -34,7 +34,27 @@ const profileSchema = new mongoose.Schema({
                 throw new Error('Gender not valid')
             }
         }
-    }
+    },
+
+    followers: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'User'
+            }
+        }
+    ],
+
+    following: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'User'
+            }
+        }
+    ]
 });
 
 const profile = mongoose.model('Profile', profileSchema);
