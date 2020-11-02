@@ -150,6 +150,37 @@ router.put('/api/post/like/:id', auth, async (req, res) => {
   }
 })
 
+//API ROUTE FOR UNLIKING A POST
+router.delete('/api/post/like/:id/:like_id', auth, async (req, res) => {
+  try{
+    //Finding the post
+    const post = await Post.findOne({ _id: req.params.id});
+    //Checking if the post exist
+    if(!post){
+      return res.status(404).send({err: "The post does not exist"});
+    }
+    //Finding the like
+    const like = post.likes.find(like => like._id.toString() === req.params.like_id)
+    //Checking if the like exists
+    if(!like){
+      return res.status(404).send({err: "The post is already unliked"});
+    }
+    //Checking if the user is authenticated to update that like
+    if(like.user.toString() !== req.user._id.toString()){
+      return res.status(400).send({err: "The user is not authorized"});
+    }
+    //Finding the index of like to be removed
+    const removeIndex = post.likes.map(like => like.user.toString()).indexOf(req.user.id);
+    //Removing that like
+    post.likes.splice(removeIndex, 1);
+    //Saving the post
+    await post.save();
+    res.status(200).send(post.likes);
+  } catch(err) {
+    res.status(500).send({err});
+  }
+});
+
 //API ROUTE FOR ADDING A COMMENT ON A POST
 router.put('/api/post/comment/:id', auth, async (req, res) => {
   try{
@@ -202,9 +233,6 @@ router.patch('/api/post/comment/:id/:comment_id', auth, async (req, res) => {
     res.status(500).send({err});
   }
 });
-
-//API ROUTE FOR UNLIKING A POST
-
 
 //API ROUTE FOR DELETING A COMMENT ON A POST
 router.delete('/api/post/comment/:id/:comment_id', auth, async (req, res) => {
