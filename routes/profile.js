@@ -51,10 +51,12 @@ router.patch('/api/profile', auth, async (req, res) => {
     }
 });
 
+
 router.put('/api/profile/follow/:id', auth, async (req, res) => {  
     try{
         //1. we need to find the user that we need to follow
         const userProfile = await Profile.findOne({user: req.params.id});
+        console.log(userProfile);
         if(!userProfile){
             return res.status(404).send({err: 'profile not found'});
         }
@@ -99,6 +101,26 @@ router.get('/api/profile/followers', auth, async (req, res) => {
         //Populating every follower details
         await profile.populate('followers.user').execPopulate();
         res.status(202).send(profile.followers);
+    } catch(err){
+        res.status(500).send({ err });
+    }
+});
+
+router.get('/api/profile/following', auth, async (req, res) => {
+    try{
+        //Finding the profile
+        const profile = await Profile.findOne({user: req.user.id});
+        //Checking if the profile exists
+        if(!profile){
+            return res.status(404).send({err: 'The profile does not exist'});
+        }
+        //Checking if you are following any profile
+        if(profile.following.length < 1){
+            return res.status(404).send({err: 'You are not following any profile'});
+        }
+        //Populating every following profile details
+        await profile.populate('following.user')    .execPopulate();
+        res.status(202).send(profile.following);
     } catch(err){
         res.status(500).send({ err });
     }
