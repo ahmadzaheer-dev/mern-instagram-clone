@@ -119,7 +119,7 @@ router.get('/api/profile/following', auth, async (req, res) => {
             return res.status(404).send({err: 'You are not following any profile'});
         }
         //Populating every following profile details
-        await profile.populate('following.user')    .execPopulate();
+        await profile.populate('following.user').execPopulate();
         res.status(202).send(profile.following);
     } catch(err){
         res.status(500).send({ err });
