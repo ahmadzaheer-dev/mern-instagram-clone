@@ -2,10 +2,12 @@ const express = require('express');
 const auth = require('../middlewares/auth');
 const Profile = require('../db/models/profile');
 const User = require('../db/models/user');
+const Feed = require('../db/models/feed');
 
 
 const router = express.Router();
 
+//API ROUTE FOR CREATING A PROFILE
 router.post('/api/profile', auth, async (req, res) => {
     try{
         const profileInDb = await Profile.findOne({user: req.user._id});
@@ -14,7 +16,10 @@ router.post('/api/profile', auth, async (req, res) => {
         }
         //Creating a new profile
         const profile = new Profile({ ...req.body, user: req.user._id});
+        //Creating a new feed
+        const feed = new Feed({user: req.user._id});
         await profile.save();
+        await feed.save();
         res.status(200).send(profile);
     } catch(err){
         res.status(400).send({ err });
