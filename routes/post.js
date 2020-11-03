@@ -8,6 +8,8 @@ const dbConnString = require('../db/dbConnString');
 const conn = require('../db/mongooseConn');
 const mongoose = require('mongoose');
 const uuid = require('uuid');
+const Feed = require('../db/models/feed');
+const Profile = require('../db/models/profile');
 
 const router = new express.Router();
 
@@ -61,6 +63,14 @@ router.post("/api/post", auth, upload.single("posts"), async (req, res) => {
 
         const post = new Post(postData);
         await post.save();
+
+        // 1. Getting the Follower details
+        const profile = await Profile.findOne({ user: req.user._id});
+        profile.followers.forEach( async follower => {
+          const feed = await Feed.findOne({ user: follower.user});
+          feed.posts.unshift({ postId: post.id, user: req.user._id});
+          await feed.save();
+        })
 
         res.status(200).send(post);
     } catch(err){
