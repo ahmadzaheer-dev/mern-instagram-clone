@@ -4,13 +4,15 @@ require('./db/mongooseConn');
 
 const userRouter = require('./routes/user');
 const profileRouter = require('./routes/profile');
-const postRouter = require('./routes/post')
+const postRouter = require('./routes/post');
+const feedRouter = require('./routes/feed');
 
 
 app.use(express.json());
 app.use(userRouter);
 app.use(profileRouter);
 app.use(postRouter);
+app.use(feedRouter);
 
 
 // PORT
