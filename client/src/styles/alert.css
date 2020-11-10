@@ -1,0 +1,15 @@
+.alert_DANGER {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.alert_SUCCESS {
+  color: green;
+  font-size: 14px;
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+}
