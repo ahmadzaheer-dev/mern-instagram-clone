@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Navbar from "./dashboard/Navbar";
+import Navbar from "./navbar/Navbar";
 import Post from "./post/Post";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
