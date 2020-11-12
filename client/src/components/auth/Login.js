@@ -3,9 +3,9 @@ import "../../styles/auth.css";
 import Logo from "../../Images/logo.png";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
-const Login = ({ login }) => {
+const Login = ({ login, isAuthenticated }) => {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
@@ -20,6 +20,10 @@ const Login = ({ login }) => {
 
   const onChange = (e) =>
     setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value });
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div>
@@ -55,4 +59,8 @@ const Login = ({ login }) => {
   );
 };
 
-export default connect(null, { login })(Login);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);

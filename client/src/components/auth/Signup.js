@@ -5,9 +5,9 @@ import "../../styles/auth.css";
 import Logo from "../../Images/logo.png";
 import { setAlert } from "../../actions/alert";
 import "../../styles/alert.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
-const Signup = ({ alerts, register, setAlert }) => {
+const Signup = ({ alerts, register, setAlert, isAuthenticated }) => {
   const [userCredentials, setUserCredentials] = useState({
     username: "",
     email: "",
@@ -32,6 +32,10 @@ const Signup = ({ alerts, register, setAlert }) => {
   const onChange = (e) =>
     setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value });
 
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div>
       <form className="auth-form" onSubmit={(e) => handleFormSubmission(e)}>
@@ -42,7 +46,7 @@ const Signup = ({ alerts, register, setAlert }) => {
           name="username"
           value={username}
           onChange={(e) => onChange(e)}
-          placeholder="Username or email"
+          placeholder="Email"
         />
         <input
           className="auth-form__input"
@@ -50,7 +54,7 @@ const Signup = ({ alerts, register, setAlert }) => {
           name="email"
           value={email}
           onChange={(e) => onChange(e)}
-          placeholder="Username or email"
+          placeholder="Username"
         />
         <input
           className="auth-form__input"
@@ -91,6 +95,7 @@ const Signup = ({ alerts, register, setAlert }) => {
 
 const mapStateToProps = (state) => ({
   alerts: state.alerts,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { register, setAlert })(Signup);
