@@ -76,8 +76,19 @@ router.put(
 );
 
 //API ROUTE STREAMING USER AVATAR
-router.get("/api/user/avatar", auth, async (req, res) => {
+router.get("/api/user/avatar", async (req, res) => {
   gfs.files.findOne({ filename: req.user.avatar }, (err, file) => {
+    if (file) {
+      let readstream = gfs.createReadStream(file);
+      readstream.pipe(res);
+    } else {
+      res.send({ err: "Image doesn't exist" });
+    }
+  });
+});
+
+router.get("/api/user/avatar/:filename", async (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     if (file) {
       let readstream = gfs.createReadStream(file);
       readstream.pipe(res);
@@ -140,6 +151,18 @@ router.post("/api/user/logoutAll", auth, async (req, res) => {
     req.user.tokens = [];
     req.user.save();
     res.status(200).send();
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
+router.get("/api/user", auth, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.user.id });
+    if (!user) {
+      return res.status(404).send({ err: "User not found" });
+    }
+    res.status(200).send(user);
   } catch (err) {
     res.status(500).send({ err });
   }
