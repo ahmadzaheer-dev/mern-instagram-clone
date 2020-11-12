@@ -1,5 +1,13 @@
-import { LOGIN_SUCCESS, REGISTER_SUCCESS } from "./actionTypes";
+import {
+  LOGIN_SUCCESS,
+  REGISTER_SUCCESS,
+  LOAD_SUCCESS,
+  LOAD_FAIL,
+  REGISTER_FAIL,
+  LOGIN_FAIL,
+} from "./actionTypes";
 import axios from "axios";
+import setGlobalAuthToken from "../utils/setToken";
 
 export const login = (email, password) => async (dispatch) => {
   const config = {
@@ -11,12 +19,15 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
   try {
     const res = await axios.post("/api/user/login", body, config);
+    setGlobalAuthToken(res.data.token);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: LOGIN_FAIL,
+    });
   }
 };
 
@@ -35,11 +46,46 @@ export const register = (username, email, password) => async (dispatch) => {
 
   try {
     const res = await axios.post("/api/user/register", body, config);
+    setGlobalAuthToken(res.data.token);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+  }
+};
+
+export const loadUser = () => async (dispatch) => {
+  const token = localStorage.getItem("token");
+  console.log(token);
+  if (token) {
+    setGlobalAuthToken(token);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const res = await axios.get("/api/user", config);
+      dispatch({
+        type: LOAD_SUCCESS,
+        payload: {
+          token: token,
+          user: res.data,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: LOAD_FAIL,
+      });
+    }
+  } else {
+    dispatch({
+      type: LOAD_FAIL,
+    });
   }
 };
