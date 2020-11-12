@@ -1,0 +1,49 @@
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #cccccc;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row {
+  width: 75%;
+  margin: 0 auto;
+  padding: 5px 0px;
+}
+
+.navbar__logo {
+  width: auto;
+  height: 40px;
+}
+
+.menu {
+  display: flex;
+  font-size: 30px;
+  padding-top: 5px;
+}
+
+.menu__item {
+  margin-left: 20px;
+}
+
+.menu__link {
+  color: #222222;
+}
+
+.searchbar__input {
+  text-align: center;
+  transition: text-align 0.3s;
+  padding: 4px 10px;
+  border: 1px solid #cccccc;
+  width: 200px;
+  margin-top: 8px;
+  border-radius: 3px;
+}
+
+.searchbar__input:focus {
+  text-align: left;
+  outline: none;
+}
