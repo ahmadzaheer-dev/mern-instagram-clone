@@ -1,0 +1,46 @@
+.post {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 60px;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+}
+.post__header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.post__avatar {
+  margin-right: 10px;
+}
+
+.post__user {
+  font-weight: 600;
+}
+
+.post__image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.post__optionbar {
+  display: flex;
+  padding: 10px 0px;
+}
+
+.post__optionitem {
+  margin-left: 10px;
+}
+
+.post__caption {
+  display: block;
+  text-align: left;
+  padding: 10px;
+}
+
+.post__captiontext {
+  display: block;
+  text-align: left;
+}
