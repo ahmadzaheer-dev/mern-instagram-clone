@@ -7,7 +7,7 @@
   background-color: #ffffff;
 }
 
-.auth-form__input {
+.form__input {
   font-size: 12px;
   display: block;
   padding: 10px;
@@ -20,7 +20,7 @@
   background-color: #f8f8f8;
 }
 
-.auth-form__input:focus {
+.form__input:focus {
   border-color: #cecece;
 }
 
