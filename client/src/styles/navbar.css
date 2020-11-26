@@ -1,17 +1,12 @@
 .navbar {
   background-color: #ffffff;
   border-bottom: 1px solid #cccccc;
-}
-
-.flex {
-  display: flex;
-  justify-content: space-between;
+  margin-bottom: 30px;
 }
 
 .row {
   width: 75%;
   margin: 0 auto;
-  padding: 5px 0px;
 }
 
 .navbar__logo {

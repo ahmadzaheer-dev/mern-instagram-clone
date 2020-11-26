@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="row flex">
+      <div className="row flex space-between">
         <img className="navbar__logo" src={Logo} alt="logo" />
         <form className="searchbar">
           <input
@@ -44,17 +44,17 @@ const Navbar = () => {
         </form>
         <ul className="menu">
           <li className="menu__item">
-            <Link className="menu__link" to="">
+            <Link className="menu__link" to="/">
               <HomeIcon fontSize="inherit" />
             </Link>
           </li>
           <li className="menu__item">
-            <Link className="menu__link" to="">
+            <Link className="menu__link" to="/chat">
               <SendIcon fontSize="inherit" />
             </Link>
           </li>
           <li className="menu__item">
-            <Link className="menu__link" to="">
+            <Link className="menu__link" to="/notifications">
               <FavoriteBorderIcon fontSize="inherit" />
             </Link>
           </li>
