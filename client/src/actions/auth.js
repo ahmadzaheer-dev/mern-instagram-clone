@@ -5,9 +5,11 @@ import {
   LOAD_FAIL,
   REGISTER_FAIL,
   LOGIN_FAIL,
+  AVATAR_SUCCESS,
 } from "./actionTypes";
 import axios from "axios";
 import setGlobalAuthToken from "../utils/setToken";
+import { setAlert } from "./alert";
 
 export const login = (email, password) => async (dispatch) => {
   const config = {
@@ -52,6 +54,7 @@ export const register = (username, email, password) => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
+    console.log(err);
     dispatch({
       type: REGISTER_FAIL,
     });
@@ -70,12 +73,12 @@ export const loadUser = () => async (dispatch) => {
       },
     };
     try {
-      const res = await axios.get("/api/user", config);
+      const user = await axios.get("/api/user", config);
       dispatch({
         type: LOAD_SUCCESS,
         payload: {
           token: token,
-          user: res.data,
+          user: user.data,
         },
       });
     } catch (error) {
@@ -87,5 +90,43 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: LOAD_FAIL,
     });
+  }
+};
+
+export const setAvatar = (avatar) => async (dispatch) => {
+  console.log("Hello World");
+  const data = new FormData();
+  data.append("avatars", avatar);
+  try {
+    const res = await axios.post("/api/user/avatar", data);
+    dispatch({
+      type: AVATAR_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(setAlert("Avatar uploaded successfully", "SUCCESS"));
+  } catch (err) {
+    dispatch(setAlert("Avatar upload failed", "DANGER"));
+  }
+};
+
+export const changePassword = (oldPassword, newPassword) => async (
+  dispatch
+) => {
+  const config = {
+    header: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = {
+    oldPassword,
+    newPassword,
+  };
+
+  try {
+    const res = await axios.patch("/api/password/change", body, config);
+    dispatch(setAlert("Password Changed", "SUCCESS"));
+  } catch (err) {
+    dispatch(setAlert("Password change failed", "DANGER"));
   }
 };
