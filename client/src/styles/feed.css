@@ -1,0 +1,14 @@
+.profile-wrapper {
+  padding: 30px;
+}
+
+.feed-wrapper,
+.profile-wrapper {
+  width: 100%;
+}
+
+.profilemsg {
+  color: #555555;
+  font-weight: 500;
+  margin-bottom: 15px;
+}

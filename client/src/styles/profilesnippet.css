@@ -1,0 +1,27 @@
+.profile-snippet {
+  margin-bottom: 15px;
+  display: block;
+}
+
+.profile-snippet__username {
+  display: block;
+  font-size: 16px;
+  color: #333333;
+  font-weight: 500;
+}
+
+.profile-snippet__name {
+  font-size: 16px;
+  font-weight: 300;
+  color: #555555;
+}
+
+.profile-snippet__avatar {
+  margin-right: 15px;
+}
+
+.profile-snippet__data {
+  position: relative;
+  display: block;
+  min-width: 150px;
+}
