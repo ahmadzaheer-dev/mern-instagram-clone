@@ -5,6 +5,7 @@ import {
   LOAD_FAIL,
   REGISTER_FAIL,
   LOGIN_FAIL,
+  AVATAR_SUCCESS,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -49,6 +50,11 @@ const auth = (auth = initialState, action) => {
       token: payload.token,
       isAuthenticated: true,
       user: payload.user,
+    };
+  } else if (type === AVATAR_SUCCESS) {
+    return {
+      ...auth,
+      user: payload,
     };
   }
   return auth;
