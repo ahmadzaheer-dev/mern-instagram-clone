@@ -4,6 +4,7 @@ import Logo from "../../Images/logo.png";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 import { Link, Redirect } from "react-router-dom";
+import { getCurrentProfile } from "../../actions/profile";
 
 const Login = ({ login, isAuthenticated }) => {
   const [userCredentials, setUserCredentials] = useState({
@@ -30,7 +31,7 @@ const Login = ({ login, isAuthenticated }) => {
       <form className="auth-form" onSubmit={(e) => handleFormSubmission(e)}>
         <img className="logo" src={Logo} alt="Logo" />
         <input
-          className="auth-form__input"
+          className="form__input"
           type="text"
           name="email"
           value={email}
@@ -38,7 +39,7 @@ const Login = ({ login, isAuthenticated }) => {
           placeholder="Username or email"
         />
         <input
-          className="auth-form__input"
+          className="form__input"
           type="password"
           name="password"
           value={password}
