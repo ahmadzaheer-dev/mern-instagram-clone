@@ -41,23 +41,23 @@ const Signup = ({ alerts, register, setAlert, isAuthenticated }) => {
       <form className="auth-form" onSubmit={(e) => handleFormSubmission(e)}>
         <img className="logo" src={Logo} alt="Logo" />
         <input
-          className="auth-form__input"
+          className="form__input"
           type="text"
           name="username"
           value={username}
           onChange={(e) => onChange(e)}
-          placeholder="Email"
+          placeholder="Username"
         />
         <input
-          className="auth-form__input"
+          className="form__input"
           type="text"
           name="email"
           value={email}
           onChange={(e) => onChange(e)}
-          placeholder="Username"
+          placeholder="Email"
         />
         <input
-          className="auth-form__input"
+          className="form__input"
           type="password"
           name="password"
           value={password}
@@ -65,7 +65,7 @@ const Signup = ({ alerts, register, setAlert, isAuthenticated }) => {
           placeholder="Password"
         />
         <input
-          className="auth-form__input"
+          className="form__input"
           type="password"
           name="password2"
           value={password2}
