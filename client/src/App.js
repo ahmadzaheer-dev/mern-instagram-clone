@@ -8,6 +8,8 @@ import SignUp from "./components/auth/Signup";
 import { loadUser } from "./actions/auth";
 import Feed from "./components/Feed";
 import Dashboard from "./components/dashboard/Dashboard";
+import Navbar from "./components/navbar/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   useEffect(() => {
@@ -20,10 +22,11 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={SignUp} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/">
-            <Feed />
-          </Route>
+          <div>
+            <Navbar />
+            <ProtectedRoute path="/dashboard" component={Dashboard} />
+            <ProtectedRoute exact={true} path="/" component={Feed} />
+          </div>
         </Switch>
       </Router>
     </Provider>
