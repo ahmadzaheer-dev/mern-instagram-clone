@@ -46,11 +46,12 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage, fileFilter });
 
 //API ROUTE FOR UPLOADING SINGLE IMAGE
-router.put(
+router.post(
   "/api/user/avatar",
   auth,
   upload.single("avatars"),
   async (req, res) => {
+    console.log("entered request");
     if (req.file) {
       // Deleting the previous avatar image if it exists
       if (req.user.avatar) {
@@ -129,6 +130,24 @@ router.post("/api/user/login", async (req, res) => {
     const token = await user.generateAuthToken();
     //Responding with user and token
     res.status(200).send({ user, token });
+  } catch (err) {
+    res.status(400).send({ err });
+  }
+});
+
+router.patch("/api/password/change", auth, async (req, res) => {
+  console.log(req.body);
+  try {
+    const user = await User.findByCredentials(
+      req.user.email,
+      req.body.oldPassword
+    );
+
+    if (user) {
+      req.user.password = req.body.newPassword;
+      await req.user.save();
+      res.status(200).send();
+    }
   } catch (err) {
     res.status(400).send({ err });
   }
