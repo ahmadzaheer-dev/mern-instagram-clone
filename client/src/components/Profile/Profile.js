@@ -1,9 +1,11 @@
 import React from "react";
+import ProfileData from "./ProfileData";
 
 const Profile = ({ user, profile, posts }) => {
   return (
-    <div className="profile">
-      <h1>Profile</h1>
+    <div className="profile row">
+      <ProfileData />
+      <div className="divider"></div>
     </div>
   );
 };
