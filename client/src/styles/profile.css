@@ -1,0 +1,49 @@
+.profile-data__avatar {
+  margin: 0 auto;
+}
+
+.profile-data__username {
+  font-size: 30px;
+  color: #555555;
+  font-weight: 400;
+}
+
+.profile-data__btn {
+  display: inline-block;
+  font-size: 14px;
+  padding: 0px 15px;
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  margin-left: 20px;
+}
+
+.profile-data__stats {
+  font-size: 17px;
+  color: #333333;
+  margin-right: 30px;
+}
+
+.profile-data__fullname,
+.profile-data__bio,
+.profile-data__website {
+  font-size: 17px;
+}
+
+.profile-data__fullname {
+  color: #555555;
+  font-weight: 600;
+}
+
+.profile-data__website {
+  color: #5eb7ff;
+}
+
+.profile-data__top-bar,
+.profile-data__stats-cont {
+  margin-bottom: 20px;
+}
+
+.profile-data__stats-count {
+  font-weight: 600;
+}
