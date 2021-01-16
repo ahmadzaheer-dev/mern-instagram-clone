@@ -124,7 +124,7 @@ export const changePassword = (oldPassword, newPassword) => async (
   };
 
   try {
-    const res = await axios.patch("/api/password/change", body, config);
+    await axios.patch("/api/password/change", body, config);
     dispatch(setAlert("Password Changed", "SUCCESS"));
   } catch (err) {
     dispatch(setAlert("Password change failed", "DANGER"));
