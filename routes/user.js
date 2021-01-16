@@ -136,7 +136,6 @@ router.post("/api/user/login", async (req, res) => {
 });
 
 router.patch("/api/password/change", auth, async (req, res) => {
-  console.log(req.body);
   try {
     const user = await User.findByCredentials(
       req.user.email,
@@ -175,6 +174,7 @@ router.post("/api/user/logoutAll", auth, async (req, res) => {
   }
 });
 
+//Getting the info of a user
 router.get("/api/user", auth, async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.user.id });
@@ -182,6 +182,32 @@ router.get("/api/user", auth, async (req, res) => {
       return res.status(404).send({ err: "User not found" });
     }
     res.status(200).send(user);
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
+router.get("/api/search/autofill/:searchstr", async (req, res) => {
+  try {
+    const regex = new RegExp(req.params.searchstr, "i");
+    const users = User.find({ username: regex }).limit(10);
+    users.exec(function (err, data) {
+      let result = [];
+
+      if (!err) {
+        if (data && data.length && data.length > 0) {
+          data.forEach((user) => {
+            let obj = {
+              _id: user._id,
+              username: user.username,
+              avatar: user.avatar,
+            };
+            result.push(obj);
+          });
+        }
+      }
+      res.status(200).send(result);
+    });
   } catch (err) {
     res.status(500).send({ err });
   }
