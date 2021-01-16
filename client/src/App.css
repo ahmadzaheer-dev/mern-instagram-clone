@@ -9,6 +9,13 @@
   grid-column-gap: 30px;
 }
 
+.grid-3-1-1-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+}
+
 .divider {
   border-bottom: 1px solid #cccccc;
   margin: 40px 0;
@@ -68,4 +75,12 @@
   background-color: #559dd8;
   color: #ffffff;
   border-radius: 3px;
+}
+
+.msg {
+  margin-bottom: 15px;
+}
+
+.msg-cont {
+  text-align: center;
 }
