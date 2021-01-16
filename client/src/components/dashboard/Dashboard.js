@@ -2,19 +2,12 @@ import React from "react";
 import EditProfile from "./EditProfile";
 import ChangePassword from "./ChangePassword";
 import UploadAvatar from "./UploadAvatar";
-import {
-  Route,
-  BrowserRouter as Router,
-  Link,
-  useRouteMatch,
-  Switch,
-  NavLink,
-} from "react-router-dom";
+import { Route, useRouteMatch, Switch, NavLink } from "react-router-dom";
 import "../../styles/dashboard.css";
 import { connect } from "react-redux";
 
 const Dashboard = ({ isLoading }) => {
-  let { url, match } = useRouteMatch();
+  let { url } = useRouteMatch();
   return (
     <div>
       <div className="row flex dashboard">

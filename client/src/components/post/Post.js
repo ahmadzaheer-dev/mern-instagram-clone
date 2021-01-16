@@ -19,7 +19,7 @@ const Post = ({ user, imageUrl, caption }) => {
           variant="circle"
         />
 
-        <Link to="#" className="post__user">
+        <Link to={`/${user.username}`} className="post__user">
           {user.username}
         </Link>
       </div>

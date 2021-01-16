@@ -4,7 +4,6 @@ import Logo from "../../Images/logo.png";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 import { Link, Redirect } from "react-router-dom";
-import { getCurrentProfile } from "../../actions/profile";
 
 const Login = ({ login, isAuthenticated }) => {
   const [userCredentials, setUserCredentials] = useState({

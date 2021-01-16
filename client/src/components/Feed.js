@@ -1,28 +1,14 @@
 import React, { useEffect, Fragment } from "react";
 import Post from "./post/Post";
 import { connect } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loadFeed } from "../actions/feed";
-import { makeStyles } from "@material-ui/core/styles";
 import "../styles/feed.css";
 import { getCurrentProfile } from "../actions/profile";
 import ProfileSnippet from "./Profile/ProfileSnippet";
+import Loading from "./loading/Loading";
 
-const useStyles = makeStyles((theme) => ({
-  large: {
-    width: theme.spacing(10),
-    height: theme.spacing(10),
-  },
-}));
-
-const Feed = ({
-  feed,
-  isAuthenticated,
-  user,
-  loadFeed,
-  profile,
-  getCurrentProfile,
-}) => {
+const Feed = ({ feed, user, loadFeed, profile, getCurrentProfile }) => {
   useEffect(() => {
     getCurrentProfile();
     loadFeed();
@@ -31,7 +17,7 @@ const Feed = ({
   return (
     <div>
       {profile.isLoading ? (
-        <p>Loading</p>
+        <Loading />
       ) : (
         <Fragment>
           {profile.data ? (
@@ -76,7 +62,6 @@ const Feed = ({
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
   feed: state.feed,
   user: state.auth.user,
   profile: state.profile,
