@@ -118,7 +118,7 @@ export const followProfile = (profileId) => async (dispatch) => {
     },
   };
   try {
-    const profile = await axios.put(`/api/profile/follow/${profileId}`, config);
+    await axios.put(`/api/profile/follow/${profileId}`, config);
     dispatch({
       type: FOLLOWED_PROFILE,
     });
