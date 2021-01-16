@@ -10,6 +10,9 @@ import Feed from "./components/Feed";
 import Dashboard from "./components/dashboard/Dashboard";
 import Navbar from "./components/navbar/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./components/Profile/Profile";
+import PageNotFound from "./components/PageNotFound";
+import CreatePost from "./components/post/CreatePost";
 
 function App() {
   useEffect(() => {
@@ -25,12 +28,14 @@ function App() {
           <div>
             <Navbar />
             <ProtectedRoute path="/dashboard" component={Dashboard} />
+            <ProtectedRoute path="/post/create" component={CreatePost} />
             <ProtectedRoute exact={true} path="/" component={Feed} />
+            <Route exact={true} path="/:username" component={Profile} />
           </div>
+          <Route path="*" component={PageNotFound} />
         </Switch>
       </Router>
     </Provider>
   );
 }
-
 export default App;
