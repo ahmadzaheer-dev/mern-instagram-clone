@@ -7,6 +7,10 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Avatar from "@material-ui/core/Avatar";
 import "../../styles/navbar.css";
 import { makeStyles } from "@material-ui/core/styles";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
+import { connect } from "react-redux";
+import Loading from "../loading/Loading";
+import Search from "./Search";
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -15,58 +19,70 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({ user, isLoading, isAuthenticated }) => {
   const classes = useStyles();
-
-  const [formData, setFormData] = useState({
-    searchString: "",
-  });
-
-  const onChangeHandler = (e) => {
-    setFormData({ ...formData, search: e.target.value });
-  };
-
-  const { search } = formData;
 
   return (
     <nav className="navbar">
-      <div className="row flex space-between">
-        <img className="navbar__logo" src={Logo} alt="logo" />
-        <form className="searchbar">
-          <input
-            className="searchbar__input"
-            type="text"
-            name="search"
-            value={search}
-            onChange={(e) => onChangeHandler(e)}
-            placeholder="Search"
-          />
-        </form>
-        <ul className="menu">
-          <li className="menu__item">
-            <Link className="menu__link" to="/">
-              <HomeIcon fontSize="inherit" />
-            </Link>
-          </li>
-          <li className="menu__item">
-            <Link className="menu__link" to="/chat">
-              <SendIcon fontSize="inherit" />
-            </Link>
-          </li>
-          <li className="menu__item">
-            <Link className="menu__link" to="/notifications">
-              <FavoriteBorderIcon fontSize="inherit" />
-            </Link>
-          </li>
-          <li className="menu__item">
-            <Link className="menu__link" to="">
-              <Avatar className={classes.small}>A</Avatar>
-            </Link>
-          </li>
-        </ul>
-      </div>
+      {!isLoading ? (
+        <div className="row flex space-between">
+          <img className="navbar__logo" src={Logo} alt="logo" />
+          <Search />
+          {isAuthenticated ? (
+            <ul className="menu">
+              <li className="menu__item">
+                <Link className="add-post__btn" to="/post/create">
+                  <AddToPhotosIcon fontSize="inherit" />
+                </Link>
+              </li>
+              <li className="menu__item">
+                <Link className="menu__link" to="/">
+                  <HomeIcon fontSize="inherit" />
+                </Link>
+              </li>
+              <li className="menu__item">
+                <Link className="menu__link" to="/chat">
+                  <SendIcon fontSize="inherit" />
+                </Link>
+              </li>
+              <li className="menu__item">
+                <Link className="menu__link" to="/notifications">
+                  <FavoriteBorderIcon fontSize="inherit" />
+                </Link>
+              </li>
+              <li className="menu__item">
+                <Link className="menu__link" to={`/${user.username}`}>
+                  <Avatar className={classes.small}>A</Avatar>
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="menu">
+              <li className="menu__item--btn">
+                <Link className="menu__btn" to="/signup">
+                  Signup
+                </Link>
+              </li>
+
+              <li className="menu__item--btn">
+                <Link className="menu__btn" to="/login">
+                  Login
+                </Link>
+              </li>
+            </ul>
+          )}
+        </div>
+      ) : (
+        <Loading />
+      )}
     </nav>
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  isLoading: state.auth.isLoading,
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, null)(Navbar);
