@@ -9,9 +9,10 @@ import {
 } from "../actions/actionTypes";
 
 const initialState = {
-  token: null,
-  isAuthenticated: false,
+  token: localStorage.getItem("token"),
+  isAuthenticated: null,
   user: null,
+  isLoading: true,
 };
 
 const auth = (auth = initialState, action) => {
@@ -23,6 +24,7 @@ const auth = (auth = initialState, action) => {
       token: payload.token,
       user: payload.user,
       isAuthenticated: true,
+      isLoading: false,
     };
   } else if (type === REGISTER_SUCCESS) {
     localStorage.setItem("token", payload.token);
@@ -31,6 +33,7 @@ const auth = (auth = initialState, action) => {
       token: payload.token,
       user: payload.user,
       isAuthenticated: true,
+      isLoading: false,
     };
   } else if (
     type === LOAD_FAIL ||
@@ -43,6 +46,7 @@ const auth = (auth = initialState, action) => {
       token: null,
       isAuthenticated: false,
       user: null,
+      isLoading: false,
     };
   } else if (type === LOAD_SUCCESS) {
     return {
@@ -50,6 +54,7 @@ const auth = (auth = initialState, action) => {
       token: payload.token,
       isAuthenticated: true,
       user: payload.user,
+      isLoading: false,
     };
   } else if (type === AVATAR_SUCCESS) {
     return {
