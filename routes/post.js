@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 const uuid = require("uuid");
 const Feed = require("../db/models/feed");
 const Profile = require("../db/models/profile");
+const User = require("../db/models/user");
 
 const router = new express.Router();
 
@@ -103,8 +104,26 @@ router.get("/api/posts", auth, async (req, res) => {
   }
 });
 
+router.get("/api/posts/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+
+    if (!user) {
+      res.status(404).send({ err: "User not found" });
+    }
+
+    const posts = await Post.find({ user: user.id });
+    if (!posts) {
+      res.status(404).send({ err: "There are no posts for this user" });
+    }
+    res.status(200).send(posts);
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
 //API ROUTE TO GET TOTAL POST OF A SPECIFIC USER
-router.get("/api/posts/:id", auth, async (req, res) => {
+router.get("/api/posts/:id", async (req, res) => {
   try {
     const posts = await Post.find({ user: req.params.id });
     if (!posts) {
