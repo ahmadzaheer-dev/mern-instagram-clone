@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Logo from "../../Images/logo.png";
 import HomeIcon from "@material-ui/icons/Home";
 import SendIcon from "@material-ui/icons/Send";
