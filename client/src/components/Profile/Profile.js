@@ -15,7 +15,7 @@ const Profile = ({
 }) => {
   useEffect(() => {
     getProfileByUsername(match.params.username);
-  }, []);
+  }, [match.params.username, getProfileByUsername]);
 
   useEffect(() => {
     if (!isLoading) {
