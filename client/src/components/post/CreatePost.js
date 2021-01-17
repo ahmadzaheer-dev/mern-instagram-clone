@@ -58,14 +58,14 @@ const CreatePost = ({ createPost, user, alerts, setAlert }) => {
 
       <form className="create-post__form" onSubmit={(e) => handleFormSubmit(e)}>
         <input
-          class="create-post__select"
+          className="create-post__select"
           id="image-upload"
           type="file"
           onChange={(e) => handleOnImageChange(e)}
         />
         {!image.selectedImage ? (
           <div>
-            <label className="create-post__btn" for="image-upload">
+            <label className="create-post__btn" htmlFor="image-upload">
               <span className="create-post__btn--inner">Select Image</span>
             </label>
           </div>
@@ -76,7 +76,7 @@ const CreatePost = ({ createPost, user, alerts, setAlert }) => {
               src={image.url}
               alt="Selected Img"
             />
-            <label className="create-post__label--image" for="image-upload">
+            <label className="create-post__label--image" htmlFor="image-upload">
               <span className="create-post__label--inner">
                 <ImageSearchIcon fontSize="inherit" />
               </span>
