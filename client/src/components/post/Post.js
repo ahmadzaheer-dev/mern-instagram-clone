@@ -7,8 +7,14 @@ import {
   SendOutlined,
 } from "@material-ui/icons";
 import "../../styles/post.css";
+import { connect } from "react-redux";
+import { likePost } from "../../actions/feed";
 
-const Post = ({ user, imageUrl, caption }) => {
+const Post = ({ user, imageUrl, caption, id, likePost }) => {
+  const handleLikePost = (e) => {
+    likePost(id);
+  };
+
   return (
     <div className="post">
       <div className="post__header">
@@ -26,7 +32,9 @@ const Post = ({ user, imageUrl, caption }) => {
       <img className="post__image" src={imageUrl} alt="post" />
       <ul className="post__optionbar">
         <li className="post__optionitem">
-          <FavoriteBorder />
+          <button onClick={(e) => handleLikePost(e)}>
+            <FavoriteBorder />
+          </button>
         </li>
         <li className="post__optionitem">
           <ChatBubbleOutline />
@@ -45,4 +53,4 @@ const Post = ({ user, imageUrl, caption }) => {
   );
 };
 
-export default Post;
+export default connect(null, { likePost })(Post);
