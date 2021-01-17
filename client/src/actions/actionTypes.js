@@ -23,3 +23,4 @@ export const FOLLOW_FAILED = "FOLLOW_FAILED";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
 export const SEARCH_FAIL = "SEARCH_FAIL";
 export const SEARCH_DEFAULT = "SEARCH_DEFAULT";
+export const POST_LIKED = "POST_LIKED";
