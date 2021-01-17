@@ -159,7 +159,7 @@ router.put("/api/post/like/:id", auth, async (req, res) => {
 
     //2. Checking if the post is already liked
     const like = post.likes.filter((like) => {
-      return like.user === req.user._id;
+      return like.user.toString() === req.user.id;
     });
 
     if (like.length > 0) {
