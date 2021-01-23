@@ -224,6 +224,7 @@ router.put("/api/post/comment/:id", auth, async (req, res) => {
       user: req.user._id,
     };
     post.comments.unshift(comment);
+    await post.populate("comments.user").execPopulate();
     await post.save();
     res.status(200).send(post);
   } catch (err) {
