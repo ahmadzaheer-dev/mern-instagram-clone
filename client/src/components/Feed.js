@@ -32,6 +32,7 @@ const Feed = ({ feed, user, loadFeed, profile, getCurrentProfile }) => {
                           user={post.user}
                           imageUrl={`http://localhost:5000/api/post/image/${post.postId.image}`}
                           caption={post.postId.caption}
+                          comments={post.postId.comments}
                           key={post._id}
                           id={post.postId._id}
                         />
