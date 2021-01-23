@@ -1,4 +1,9 @@
-import { FEED_LOADED, FEED_ERR, POST_LIKED } from "../actions/actionTypes";
+import {
+  FEED_LOADED,
+  FEED_ERR,
+  POST_LIKED,
+  COMMENT_ADDED,
+} from "../actions/actionTypes";
 
 const feed = (feed = [], action) => {
   const { type, payload } = action;
@@ -15,6 +20,20 @@ const feed = (feed = [], action) => {
           postId: {
             ...post.postId,
             likes: payload.likes,
+          },
+        };
+      } else {
+        return post;
+      }
+    });
+  } else if (type === COMMENT_ADDED) {
+    return feed.map((post) => {
+      if (post.postId._id === payload._id) {
+        return {
+          ...post,
+          postId: {
+            ...post.postId,
+            comments: payload.comments,
           },
         };
       } else {

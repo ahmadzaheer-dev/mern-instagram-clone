@@ -16,8 +16,14 @@
   margin-right: 10px;
 }
 
-.post__user {
+.post__user,
+.post__user:visited {
   font-weight: 600;
+  color: #555555;
+}
+
+.post__user:hover {
+  text-decoration: underline;
 }
 
 .post__image {
@@ -43,4 +49,60 @@
 .post__captiontext {
   display: block;
   text-align: left;
+}
+
+.comments__add {
+  display: flex;
+}
+
+.comments__input {
+  flex-grow: 1;
+  padding: 15px 10px;
+  border: none;
+  border-top: 1px solid #cccccc;
+  font-size: 15px;
+}
+
+.comments__input:focus {
+  outline: none;
+}
+
+.comments__submit {
+  border: none;
+  background: none;
+  border-top: 1px solid #cccccc;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 15px 20px;
+  color: #5eb7ff;
+  font-weight: 700;
+}
+
+.comment {
+  display: flex;
+  margin: 0px 10px 10px 10px;
+  align-items: center;
+}
+
+.comment__data {
+  margin-left: 5px;
+  font-size: 15px;
+}
+
+.comment__username,
+.comment__username:visited {
+  color: #555555;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.comment__username:hover {
+  text-decoration: underline;
+}
+
+.post__likebtn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
 }

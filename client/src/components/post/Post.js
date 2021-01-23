@@ -1,16 +1,13 @@
 import React from "react";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import {
-  ChatBubbleOutline,
-  FavoriteBorder,
-  SendOutlined,
-} from "@material-ui/icons";
+import { ChatBubbleOutline, FavoriteBorder } from "@material-ui/icons";
 import "../../styles/post.css";
 import { connect } from "react-redux";
 import { likePost } from "../../actions/feed";
+import Comments from "./Comments";
 
-const Post = ({ user, imageUrl, caption, id, likePost }) => {
+const Post = ({ user, imageUrl, caption, id, likePost, comments }) => {
   const handleLikePost = (e) => {
     likePost(id);
   };
@@ -32,15 +29,12 @@ const Post = ({ user, imageUrl, caption, id, likePost }) => {
       <img className="post__image" src={imageUrl} alt="post" />
       <ul className="post__optionbar">
         <li className="post__optionitem">
-          <button onClick={(e) => handleLikePost(e)}>
+          <button className="post__likebtn" onClick={(e) => handleLikePost(e)}>
             <FavoriteBorder />
           </button>
         </li>
         <li className="post__optionitem">
           <ChatBubbleOutline />
-        </li>
-        <li className="post__optionitem">
-          <SendOutlined />
         </li>
       </ul>
       <div className="post__caption">
@@ -49,6 +43,7 @@ const Post = ({ user, imageUrl, caption, id, likePost }) => {
         </Link>
         <caption className="post__captiontext">{caption}</caption>
       </div>
+      <Comments id={id} comments={comments} />
     </div>
   );
 };
