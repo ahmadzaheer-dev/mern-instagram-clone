@@ -29,6 +29,8 @@ router.get("/api/profile", auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user._id });
     await profile.populate("user").execPopulate();
+    await profile.populate("followers.user").execPopulate();
+    await profile.populate("following.user").execPopulate();
     res.status(200).send(profile);
   } catch (err) {
     res.status(400).send({ err });
@@ -184,6 +186,9 @@ router.get("/api/profile/:username", async (req, res) => {
     }
     const profile = await Profile.findOne({ user: user.id });
     await profile.populate("user").execPopulate();
+    await profile.populate("followers.user").execPopulate();
+    await profile.populate("following.user").execPopulate();
+
     res.status(200).send(profile);
   } catch (err) {
     res.status(400).send({ err });
