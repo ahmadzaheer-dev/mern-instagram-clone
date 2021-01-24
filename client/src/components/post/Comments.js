@@ -26,8 +26,8 @@ const Comments = ({ comments, addComment, id }) => {
             <Comment
               user={comment.user}
               comment={comment.caption}
-              key={comment.id}
-              id={comment.id}
+              key={comment._id}
+              id={comment._id}
               post={id}
             />
           );

@@ -87,6 +87,8 @@
 .comment__data {
   margin-left: 5px;
   font-size: 15px;
+  flex-grow: 1;
+  text-align: left;
 }
 
 .comment__username,
@@ -100,7 +102,8 @@
   text-decoration: underline;
 }
 
-.post__likebtn {
+.post__likebtn,
+.comment__deletebtn {
   border: none;
   background: none;
   cursor: pointer;

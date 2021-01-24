@@ -2,6 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { deleteComment } from "../../actions/feed";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   xSmall: {
@@ -10,9 +13,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Comment = ({ user, comment }) => {
+const Comment = ({ user, comment, deleteComment, id, post }) => {
   const classes = useStyles();
-  console.log(user);
+  const onDeleteHandler = () => {
+    deleteComment(post, id);
+  };
   return (
     <div className="comment">
       <Avatar
@@ -28,8 +33,11 @@ const Comment = ({ user, comment }) => {
 
         <span className="comment__text">&nbsp;{comment}</span>
       </caption>
+      <button onClick={onDeleteHandler} className="comment__deletebtn">
+        <DeleteIcon style={{ color: "#d11a2a", fontSize: 20 }} />
+      </button>
     </div>
   );
 };
 
-export default Comment;
+export default connect(null, { deleteComment })(Comment);

@@ -25,3 +25,4 @@ export const SEARCH_FAIL = "SEARCH_FAIL";
 export const SEARCH_DEFAULT = "SEARCH_DEFAULT";
 export const POST_LIKED = "POST_LIKED";
 export const COMMENT_ADDED = "COMMENT_ADDED";
+export const COMMENT_DELETED = "COMMENT_DELETED";

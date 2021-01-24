@@ -300,7 +300,7 @@ router.delete("/api/post/comment/:id/:comment_id", auth, async (req, res) => {
     post.comments.splice(removeIndex, 1);
     //Saving the post
     await post.save();
-    res.status(200).send(post.comments);
+    res.status(200).send(post);
   } catch (err) {
     res.status(500).send({ err });
   }

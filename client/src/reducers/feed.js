@@ -3,6 +3,7 @@ import {
   FEED_ERR,
   POST_LIKED,
   COMMENT_ADDED,
+  COMMENT_DELETED,
 } from "../actions/actionTypes";
 
 const feed = (feed = [], action) => {
@@ -26,7 +27,7 @@ const feed = (feed = [], action) => {
         return post;
       }
     });
-  } else if (type === COMMENT_ADDED) {
+  } else if (type === COMMENT_ADDED || type === COMMENT_DELETED) {
     return feed.map((post) => {
       if (post.postId._id === payload._id) {
         return {

@@ -3,6 +3,7 @@ import {
   FEED_ERR,
   POST_LIKED,
   COMMENT_ADDED,
+  COMMENT_DELETED,
 } from "./actionTypes";
 import axios from "axios";
 
@@ -53,6 +54,19 @@ export const addComment = (id, caption) => async (dispatch) => {
     const res = await axios.put(`/api/post/comment/${id}`, body, config);
     dispatch({
       type: COMMENT_ADDED,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteComment = (postId, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/post/comment/${postId}/${commentId}`);
+    console.log(res.data);
+    dispatch({
+      type: COMMENT_DELETED,
       payload: res.data,
     });
   } catch (err) {
