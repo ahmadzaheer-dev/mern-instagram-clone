@@ -68,3 +68,59 @@
   font-size: 30px;
   color: #333333;
 }
+
+.follow-modal {
+  position: absolute;
+  width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  outline: none;
+  border-radius: 5px;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.follow-modal__topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.follow-modal__heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: #555555;
+}
+
+.follow-modal__close {
+  border: none;
+  font-size: 20px;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+.follow-modal__users {
+  overflow-y: scroll;
+  flex: 1;
+}
+
+.profile-data__btn--transparent {
+  border: none;
+  background: none;
+  outline: none;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.profile-data__btn--transparent:hover {
+  text-decoration: underline;
+}
