@@ -113,3 +113,50 @@
   background: transparent;
   cursor: pointer;
 }
+
+.submenu {
+  width: 200px;
+  border: 1px solid #cccccc;
+  position: absolute;
+  right: 0;
+  background: #ffffff;
+  padding: 0;
+  z-index: 1000;
+  border-radius: 5px;
+}
+
+.submenu__btn {
+  border: none;
+  background: none;
+  padding: 0px;
+  line-height: 0;
+  outline: none;
+  cursor: pointer;
+  margin-top: -5px;
+}
+
+.submenu__btn-cont {
+  padding: 0;
+}
+
+.submenu__link {
+  padding: 5px 15px;
+}
+
+.submenu__link {
+  display: flex;
+  align-items: center;
+}
+
+.submenu__link > span {
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+.submenu__link:visited {
+  color: #444444;
+}
+
+.submenu__item:last-child {
+  border-top: 1px solid #cccccc;
+}
