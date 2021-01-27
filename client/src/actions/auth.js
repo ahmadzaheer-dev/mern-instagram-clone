@@ -63,7 +63,6 @@ export const register = (username, email, password) => async (dispatch) => {
 
 export const loadUser = () => async (dispatch) => {
   const token = localStorage.getItem("token");
-  console.log(token);
   if (token) {
     setGlobalAuthToken(token);
     const config = {
