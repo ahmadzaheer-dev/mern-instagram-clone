@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Logo from "../../Images/logo.png";
 import HomeIcon from "@material-ui/icons/Home";
 import SendIcon from "@material-ui/icons/Send";
@@ -10,6 +11,7 @@ import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import { connect } from "react-redux";
 import Loading from "../loading/Loading";
 import Search from "./Search";
+import SubMenu from "./SubMenu";
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -20,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = ({ user, isLoading, isAuthenticated }) => {
   const classes = useStyles();
+
+  const [toggleSubMenu, setToggleSubMenu] = useState(false);
 
   return (
     <nav className="navbar">
@@ -49,10 +53,19 @@ const Navbar = ({ user, isLoading, isAuthenticated }) => {
                   <FavoriteBorderIcon fontSize="inherit" />
                 </Link>
               </li>
-              <li className="menu__item">
-                <Link className="menu__link" to={`/${user.username}`}>
-                  <Avatar className={classes.small}>A</Avatar>
-                </Link>
+              <li className="menu__item submenu__btn-cont">
+                <span
+                  onClick={(e) => setToggleSubMenu(!toggleSubMenu)}
+                  className="menu__link submenu__btn"
+                >
+                  <Avatar
+                    src={`http://localhost:5000/api/user/avatar/${user.avatar}`}
+                    className={classes.small}
+                  >
+                    A
+                  </Avatar>
+                </span>
+                {toggleSubMenu ? <SubMenu /> : null}
               </li>
             </ul>
           ) : (
