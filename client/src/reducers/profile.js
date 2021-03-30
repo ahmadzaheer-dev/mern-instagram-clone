@@ -7,13 +7,13 @@ import {
   POSTS_ERR,
   FOLLOWED_PROFILE,
   FOLLOW_FAILED,
+  PROFILE_COMMENT_ADDED,
 } from "../actions/actionTypes";
 
 const initialState = {
   data: null,
   isLoading: true,
   posts: null,
-  isFollowed: null,
 };
 
 const profileReducer = (profile = initialState, action) => {
@@ -48,14 +48,31 @@ const profileReducer = (profile = initialState, action) => {
       posts: null,
     };
   } else if (type === FOLLOWED_PROFILE) {
+    console.log(payload);
     return {
       ...profile,
-      isFollowed: true,
+      data: {
+        ...profile.data,
+        followers: payload,
+      },
     };
   } else if (type === FOLLOW_FAILED) {
     return {
       ...profile,
-      isFollowed: false,
+    };
+  } else if (type === PROFILE_COMMENT_ADDED) {
+    return {
+      ...profile,
+      posts: profile.posts.map((post) => {
+        if (post._id === payload._id) {
+          return {
+            ...post,
+            comments: payload.comments,
+          };
+        } else {
+          return post;
+        }
+      }),
     };
   }
 
