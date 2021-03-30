@@ -2,15 +2,28 @@ import { useState } from "react";
 import Comment from "./Comment";
 import { addComment } from "../../actions/feed";
 import { connect } from "react-redux";
+import { profileAddComment } from "../../actions/profile";
 
-const Comments = ({ comments, addComment, id }) => {
+const Comments = ({
+  comments,
+  addComment,
+  id,
+  classes,
+  children,
+  isProfilePost = false,
+  profileAddComment,
+}) => {
   const [comment, setComment] = useState({ caption: "" });
 
   const { caption } = comment;
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    addComment(id, caption);
+    if (isProfilePost) {
+      profileAddComment(id, caption);
+    } else {
+      addComment(id, caption);
+    }
     setComment({ ...comment, caption: "" });
   };
 
@@ -19,19 +32,22 @@ const Comments = ({ comments, addComment, id }) => {
   };
 
   return (
-    <div className="comments">
-      {comments.length > 0 &&
-        comments.map((comment) => {
-          return (
-            <Comment
-              user={comment.user}
-              comment={comment.caption}
-              key={comment._id}
-              id={comment._id}
-              post={id}
-            />
-          );
-        })}
+    <div className={`comments ${classes}`}>
+      <div className="comments-cont">
+        {comments.length > 0 &&
+          comments.map((comment) => {
+            return (
+              <Comment
+                user={comment.user}
+                comment={comment.caption}
+                key={comment._id}
+                id={comment._id}
+                post={id}
+              />
+            );
+          })}
+      </div>
+      {children}
       <form className="comments__add" onSubmit={(e) => handleFormSubmit(e)}>
         <input
           className="comments__input"
@@ -47,4 +63,4 @@ const Comments = ({ comments, addComment, id }) => {
   );
 };
 
-export default connect(null, { addComment })(Comments);
+export default connect(null, { addComment, profileAddComment })(Comments);
