@@ -55,7 +55,7 @@ const Search = ({ searchByUsername, setSearchDefault, searchedUsers }) => {
         <div className="search-result">
           {searchedUsers.map((user) => {
             return (
-              <div className="search-result__user">
+              <div key={user._id} className="search-result__user">
                 <Avatar
                   alt={user.username.toUpperCase()}
                   src={`http://localhost:5000/api/user/avatar/${user.avatar}`}
