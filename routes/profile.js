@@ -83,11 +83,9 @@ router.put("/api/profile/follow/:id", auth, async (req, res) => {
     //3. push that user on our following
     myProfile.following.unshift({ user: req.params.id });
     await myProfile.save();
+    await userProfile.populate("followers.user").execPopulate();
 
-    res.status(200).send({
-      userProfile: userProfile.followers,
-      myProfile: myProfile.following,
-    });
+    res.status(200).send(userProfile.followers);
   } catch (err) {
     res.status(500).send({ err });
   }
