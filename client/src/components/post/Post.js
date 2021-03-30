@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { likePost } from "../../actions/feed";
 import Comments from "./Comments";
 
-const Post = ({ user, imageUrl, caption, id, likePost, comments }) => {
+const Post = ({ user, imageUrl, caption, id, likePost, comments, likes }) => {
   const handleLikePost = (e) => {
     likePost(id);
   };
@@ -33,7 +33,7 @@ const Post = ({ user, imageUrl, caption, id, likePost, comments }) => {
           </button>
         </li>
         <li className="post__optionitem">
-          <ChatBubbleOutline />
+          <span className="post__likes">{`${likes.length} likes`}</span>
         </li>
       </ul>
       <div className="post__caption">
