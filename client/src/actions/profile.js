@@ -7,6 +7,8 @@ import {
   POSTS_ERR,
   FOLLOWED_PROFILE,
   FOLLOW_FAILED,
+  PROFILE_COMMENT_ADDED,
+  PROFILE_COMMENT_DELETED,
 } from "./actionTypes";
 import axios from "axios";
 import { setAlert } from "./alert";
@@ -118,13 +120,49 @@ export const followProfile = (profileId) => async (dispatch) => {
     },
   };
   try {
-    await axios.put(`/api/profile/follow/${profileId}`, config);
+    const res = await axios.put(`/api/profile/follow/${profileId}`, config);
     dispatch({
       type: FOLLOWED_PROFILE,
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
       type: FOLLOW_FAILED,
     });
+  }
+};
+
+export const profileAddComment = (id, caption) => async (dispatch) => {
+  console.log(id, caption);
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = {
+    caption: caption,
+  };
+  try {
+    const res = await axios.put(`/api/post/comment/${id}`, body, config);
+    dispatch({
+      type: PROFILE_COMMENT_ADDED,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const profileDeleteComment = (postId, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/post/comment/${postId}/${commentId}`);
+    console.log(res.data);
+    dispatch({
+      type: PROFILE_COMMENT_DELETED,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };
