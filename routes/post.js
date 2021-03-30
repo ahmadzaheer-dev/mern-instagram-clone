@@ -116,6 +116,10 @@ router.get("/api/posts/:username", async (req, res) => {
     if (!posts) {
       res.status(404).send({ err: "There are no posts for this user" });
     }
+    //Populating multiple document with Model.populate(arrayOfDocuments, "path")
+    await Post.populate(posts, "user");
+    await Post.populate(posts, "comments.user");
+
     res.status(200).send(posts);
   } catch (err) {
     res.status(500).send({ err });
@@ -300,6 +304,7 @@ router.delete("/api/post/comment/:id/:comment_id", auth, async (req, res) => {
     post.comments.splice(removeIndex, 1);
     //Saving the post
     await post.save();
+    await post.populate("comments.user").execPopulate();
     res.status(200).send(post);
   } catch (err) {
     res.status(500).send({ err });
