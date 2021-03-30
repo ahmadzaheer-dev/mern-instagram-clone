@@ -1,4 +1,4 @@
-import { POST_CREATED } from "../actions/actionTypes";
+import { POST_CREATED, POST_CHANGED } from "../actions/actionTypes";
 
 const initialState = {
   data: null,
@@ -8,6 +8,12 @@ const initialState = {
 const postReducer = (post = initialState, action) => {
   const { type, payload } = action;
   if (type === POST_CREATED) {
+    return {
+      ...post,
+      data: payload,
+      isLoading: false,
+    };
+  } else if (type === POST_CHANGED) {
     return {
       ...post,
       data: payload,

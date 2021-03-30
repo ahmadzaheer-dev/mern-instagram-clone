@@ -1,5 +1,5 @@
 import axios from "axios";
-import { POST_CREATED } from "./actionTypes";
+import { POST_CREATED, POST_CHANGED } from "./actionTypes";
 import { setAlert } from "./alert";
 
 export const createPost = (image, caption) => async (dispatch) => {
@@ -16,4 +16,11 @@ export const createPost = (image, caption) => async (dispatch) => {
   } catch (err) {
     dispatch(setAlert("Post creation failed", "DANGER"));
   }
+};
+
+export const setPost = (post) => (dispatch) => {
+  dispatch({
+    type: POST_CHANGED,
+    payload: post,
+  });
 };
