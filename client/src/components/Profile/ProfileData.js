@@ -60,6 +60,15 @@ const ProfileData = ({ profile, user, posts, isLoading, followProfile }) => {
                 <Link to="/dashboard/edit" className="profile-data__btn">
                   Edit Profile
                 </Link>
+              ) : profile.followers.filter((follower) => {
+                  return follower.user._id === user._id;
+                }).length > 0 ? (
+                <button
+                  onClick={(e) => onFollowClick(e)}
+                  className="profile-data__btn"
+                >
+                  Followed
+                </button>
               ) : (
                 <button
                   onClick={(e) => onFollowClick(e)}

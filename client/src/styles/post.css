@@ -109,3 +109,7 @@
   cursor: pointer;
   padding: 0;
 }
+
+.comment:first-child {
+  margin-top: 10px;
+}

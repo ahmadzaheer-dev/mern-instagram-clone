@@ -1,10 +1,26 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import { Link } from "react-router-dom";
 import Loading from "../loading/Loading";
+import PostModal from "../post/PostModal";
+import CloseIcon from "@material-ui/icons/Close";
+import Modal from "react-modal";
+import { setPost } from "../../actions/post";
 
-const ProfileGallery = ({ posts, user, profile, isLoading }) => {
+const ProfileGallery = ({ posts, user, profile, isLoading, setPost }) => {
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const openModal = async (post) => {
+    if (post) {
+      await setPost(post);
+      setIsOpen(true);
+    }
+  };
+
   return (
     <div className="profile-gallery">
       {!posts ? (
@@ -18,8 +34,30 @@ const ProfileGallery = ({ posts, user, profile, isLoading }) => {
                 alt="post"
                 src={`http://localhost:5000/api/post/image/${post.image}`}
               />
+              <a onClick={(e) => openModal(post)}>Open Post</a>
             </div>
           ))}
+          <Modal
+            className="post-modal"
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            contentLabel="Example Modal"
+            style={{
+              overlay: {
+                position: "fixed",
+                backgroundColor: "rgba(0, 0, 0, 0.70)",
+                top: "0",
+                left: "0",
+                bottom: "0",
+                right: "0",
+              },
+            }}
+          >
+            <button className="post-modal__close" onClick={closeModal}>
+              <CloseIcon />
+            </button>
+            <PostModal />
+          </Modal>
         </div>
       ) : (
         <div className="msg-cont">
@@ -51,4 +89,4 @@ const mapStateToProps = (state) => ({
   isLoading: state.auth.isLoading,
 });
 
-export default connect(mapStateToProps, null)(ProfileGallery);
+export default connect(mapStateToProps, { setPost })(ProfileGallery);
